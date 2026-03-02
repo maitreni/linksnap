@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  linksnap:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      BASE_URL: http://localhost:3000
+      DB_PATH: /data/linksnap.db
+    volumes:
+      - linksnap-data:/data
+    restart: unless-stopped
+
+volumes:
+  linksnap-data:

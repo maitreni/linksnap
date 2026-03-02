@@ -1,9 +1,14 @@
 FROM node:20-alpine
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev
 
+# Copie les manifestes en premier (cache layer)
+COPY package.json ./
+
+# npm install génère le lock file si absent, npm ci l'exige
+RUN npm install --omit=dev
+
+# Copie le reste du code
 COPY . .
 
 EXPOSE 3000
